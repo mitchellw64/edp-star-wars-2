@@ -121,3 +121,45 @@ section#films a {
   border-radius: 5px;
   border: 1px solid var(--dark2);
 }
+
+/* Film page */
+
+/* #container {
+  display: flex;
+  justify-content: space-between;
+} */
+
+
+#film-name {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 5%;
+  padding-bottom: 5%;
+}
+
+p {
+  border-radius: 15px;
+
+}
+
+#film-name {
+  font-weight: bolder;
+}
+
+#characters-list {
+  color: navy;
+  font-weight: bolder;
+  font-size: large;
+  border-radius: 15px;
+}
+
+li {
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid var(--dark2);
+  border-radius: 5px;
+  color: var(--dark2);
+  background-color: var(--light2);
+  font-weight: bold;
+  max-width: fit-content;
+}
