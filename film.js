@@ -1,6 +1,5 @@
 const sp = new URLSearchParams(window.location.search);
 const id = sp.get('id');
-console.log(id)
 
 const fetchFilm = async() => {
     let released = document.getElementById('year');
@@ -23,16 +22,35 @@ const fetchFilm = async() => {
 const fetchCharacters = async() => {
     try {
         let characters = await fetch(`http://localhost:9001/api/films/${id}/characters`).then(res => res.json());
-        console.log(characters)
         characters.map(person => {
-            let listItem = document.createElement('li');
+            let listItem = document.createElement('a');
             listItem.textContent = person.name;
-            document.getElementById('characters-list').appendChild(listItem)
+            document.getElementById('characterslist').appendChild(listItem)
+            listItem.addEventListener('click', () =>{
+                window.location = `/character.html?id=${person.id}`
+            })
         })
     } catch (err) {
         console.log("Error:", err);
     }
 }
 
+const fetchPlanets = async() => {
+    try {
+        let planets = await fetch(`http://localhost:9001/api/films/${id}/planets`).then(res => res.json());
+        planets.map(planet => {
+            let listItem = document.createElement('a');
+            listItem.textContent = planet.name;
+            document.getElementById('planets-list').appendChild(listItem)
+            listItem.addEventListener('click', () => {
+                window.location = `/planet.hmtl?id=${planet.id}`
+            })
+        })
+    } catch (err) {
+        console.log("Error:", err)
+    }
+}
+
 fetchFilm()
 fetchCharacters()
+fetchPlanets()
