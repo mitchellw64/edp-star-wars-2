@@ -7,6 +7,19 @@ let climate, surfaceWater, name, diameter, rotationPeriod, terrain, gravity, orb
 
 addEventListener('DOMContentLoaded', () => {
   // add more here
+  nameH1 = document.querySelector('h1#name');
+  populationSpan = document.querySelector('span#population');
+  climateSpan = document.querySelector('span#climate');
+  terrainSpan = document.querySelector('span#terrain');
+  surfaceWaterSpan = document.querySelector('span#surface_water');
+  gravitySpan = document.querySelector('span#gravity');
+  diameterSpan = document.querySelector('span#diameter');
+  orbitalPeriodSpan = document.querySelector('span#orbital_period');
+  rotationPeriodSpan = document.querySelector('span#rotation_period');
+
+  charactersUl = document.querySelector('#characters>ul');
+  filmsUl = document.querySelector('#films>ul');
+  
   const sp = new URLSearchParams(window.location.search);
   const id = sp.get('id');
   getPlanet(id);
