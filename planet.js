@@ -37,7 +37,7 @@ addEventListener('DOMContentLoaded', () => {
 async function getPlanet(id) {
     let planet;
     try {
-        planet = await fetchPlanet(id);
+        planet = await fetchPlanet(id); // example: planet.name reads Tatooine
         planet.characters = await fetchCharacters(id);
         planet.films = await fetchFilms(id);
     } catch (ex) {
@@ -85,3 +85,25 @@ async function fetchFilms(id) {
     return films;
 }
 
+const renderPlanet = planet => {
+    document.title = `SWAPI - ${planet?.name}`;  // Just to make the browser tab say their name 
+    
+    // fills in text content of each tag with planet attribute from the data
+    nameH1.textcontent = planet?.name;
+    populationSpan.textcontent = planet?.population;
+    climateSpan.textcontent = planet?.climate;
+    terrainSpan.textcontent = planet?.terrain;
+    surfaceWaterSpan.textcontent = planet?.surfaceWater;
+    gravitySpan.textcontent = planet?.gravity;
+    diameterSpan.textcontent = planet?.diameter;
+    orbitalPeriodSpan.textcontent = planet?.orbitalPeriod;
+    rotationPeriodSpan.textcontent = planet?.rotationPeriod;
+
+    // puts all characters into a list
+    const charactersLis = planet?.characters?.map(character => `<li><a href="/character.html?id=${character.id}"></li>`);
+    charactersUl.innerHTML = charactersLis.join("");
+
+    // film.title and this whole URL could have Joseph conflicts later on
+    const filmsLis = character?.films?.map(film => `<li><a href="/film.html?id=${film.id}">${film.title}</li>`);
+    filmsUl.innerHTML = filmsLis.join("");
+}   
