@@ -14,11 +14,11 @@ addEventListener('DOMContentLoaded', () => {
   populationSpan = document.querySelector('span#population');
   climateSpan = document.querySelector('span#climate');
   terrainSpan = document.querySelector('span#terrain');
-  surfaceWaterSpan = document.querySelector('span#surface_water');
+  surfaceWaterSpan = document.querySelector('span#surfaceWater');
   gravitySpan = document.querySelector('span#gravity');
   diameterSpan = document.querySelector('span#diameter');
-  orbitalPeriodSpan = document.querySelector('span#orbital_period');
-  rotationPeriodSpan = document.querySelector('span#rotation_period');
+  orbitalPeriodSpan = document.querySelector('span#orbitalPeriod');
+  rotationPeriodSpan = document.querySelector('span#rotationPeriod');
 
   // going to add characters/films to <ul> list
   charactersUl = document.querySelector('ul#characterList');
@@ -98,11 +98,11 @@ const renderPlanet = (planet, characters, films) => {
     populationSpan.textContent = planet?.population;
     climateSpan.textContent = planet?.climate;
     terrainSpan.textContent = planet?.terrain;
-    surfaceWaterSpan.textContent = planet?.surfaceWater;
+    surfaceWaterSpan.textContent = planet?.surface_water;
     gravitySpan.textContent = planet?.gravity;
     diameterSpan.textContent = planet?.diameter;
-    orbitalPeriodSpan.textContent = planet?.orbitalPeriod;
-    rotationPeriodSpan.textContent = planet?.rotationPeriod;
+    orbitalPeriodSpan.textContent = planet?.orbital_period;
+    rotationPeriodSpan.textContent = planet?.rotation_period;
 
     // puts all characters into a list
     const charactersLis = characters?.map(character => `<li><a href="/character.html?id=${character.id}">${character.name}</li>`);
