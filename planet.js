@@ -33,6 +33,7 @@ addEventListener('DOMContentLoaded', () => {
 });
 
 // collects data from all 3 apis (planet, characters on planet, films on planet)
+// renders (adds data to html) of planet after
 async function getPlanet(id) {
     let planet;
     try {
@@ -42,6 +43,8 @@ async function getPlanet(id) {
     } catch (ex) {
         console.error(`Error reading planet ${id} data`, ex.message);
     }
+
+    // renders (adds data to html) of planet
     renderPlanet(planet);
 }
 
@@ -81,3 +84,4 @@ async function fetchFilms(id) {
         .finally(() => console.log('Fetch attempt completed.'));
     return films;
 }
+
