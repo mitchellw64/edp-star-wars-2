@@ -43,7 +43,7 @@ const fetchPlanets = async() => {
             listItem.textContent = planet.name;
             document.getElementById('planets-list').appendChild(listItem)
             listItem.addEventListener('click', () => {
-                window.location = `/planet.hmtl?id=${planet.id}`
+                window.location = `/planet.html?id=${planet.id}`
             })
         })
     } catch (err) {
