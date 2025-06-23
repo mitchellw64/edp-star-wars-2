@@ -21,7 +21,7 @@ addEventListener('DOMContentLoaded', () => {
   rotationPeriodSpan = document.querySelector('span#rotation_period');
 
   // going to add characters/films to <ul> list
-  charactersUl = document.querySelector('#characters>ul');
+  charactersUl = document.querySelector('ul#characterList');
   filmsUl = document.querySelector('#films>ul');
   
   // get id from baseURL
@@ -35,75 +35,79 @@ addEventListener('DOMContentLoaded', () => {
 // collects data from all 3 apis (planet, characters on planet, films on planet)
 // renders (adds data to html) of planet after
 async function getPlanet(id) {
-    let planet;
+    let planet, characters, films;
     try {
         planet = await fetchPlanet(id); // example: planet.name reads Tatooine
-        planet.characters = await fetchCharacters(id);
-        planet.films = await fetchFilms(id);
+        characters = await fetchCharacters(id);
+        films = await fetchFilms(id);
+
+        renderPlanet(planet, characters, films);
     } catch (ex) {
         console.error(`Error reading planet ${id} data`, ex.message);
     }
-
-    // renders (adds data to html) of planet
-    renderPlanet(planet);
 }
-
-// Sample fetch call
-// fetch('http://localhost:9000/api/socks/1/10')
-//   .then(response => response.json())
-//   .then(data => console.log('Data:', data))
-//   .catch(error => console.error('Error:', error))
-//   .finally(() => console.log('Fetch attempt completed.'));
 
 // fetches planet attributes
 async function fetchPlanet(id) {
     let planetURL = `http://localhost:9001/api/planets/${id}`;
-    const planet = await fetch(planetURL)
-        .then(data => console.log('Data:', data))
-        .catch(error => console.error('Error:', error))
-        .finally(() => console.log('Fetch attempt completed.'));
-    return planet;
+    console.log("planet url: ", planetURL);
+    try {
+        const planet = await fetch(planetURL);
+        const data = await planet.json();
+        console.log('Planet Data:', data)
+        return data;
+    } catch (ex) {
+        console.error('Planet Error:', ex.message)
+    }
+    return [];
 }
 
 // fetches characters who were on planet
 async function fetchCharacters(id) {
     let charactersURL = `http://localhost:9001/api/planets/${id}/characters`;
-    const characters = await fetch(charactersURL)
-        .then(data => console.log('Data:', data))
-        .catch(error => console.error('Error:', error))
-        .finally(() => console.log('Fetch attempt completed.'));
-    return characters;
+    try {
+        const characters = await fetch(charactersURL);
+        const data = await characters.json();
+        console.log('Characters Data:', data)
+        return data;
+    } catch (ex) {
+        console.error('Characters Error:', ex.message)
+    }
+    return [];
 }
 
 // fetches films featuring the planet
 async function fetchFilms(id) {
     let filmsURL = `http://localhost:9001/api/planets/${id}/films`;
-    const films = await fetch(filmsURL)
-        .then(data => console.log('Data:', data))
-        .catch(error => console.error('Error:', error))
-        .finally(() => console.log('Fetch attempt completed.'));
-    return films;
+    try {
+        const films = await fetch(filmsURL);
+        const data = await films.json();
+        console.log('Films Data:', data)
+        return data;
+    } catch (ex) {
+        console.error('Films Error:', ex.message)
+    }
+    return [];
 }
 
-const renderPlanet = planet => {
+const renderPlanet = (planet, characters, films) => {
     document.title = `SWAPI - ${planet?.name}`;  // Just to make the browser tab say their name 
     
     // fills in text content of each tag with planet attribute from the data
-    nameH1.textcontent = planet?.name;
-    populationSpan.textcontent = planet?.population;
-    climateSpan.textcontent = planet?.climate;
-    terrainSpan.textcontent = planet?.terrain;
-    surfaceWaterSpan.textcontent = planet?.surfaceWater;
-    gravitySpan.textcontent = planet?.gravity;
-    diameterSpan.textcontent = planet?.diameter;
-    orbitalPeriodSpan.textcontent = planet?.orbitalPeriod;
-    rotationPeriodSpan.textcontent = planet?.rotationPeriod;
+    nameH1.textContent = planet?.name;
+    populationSpan.textContent = planet?.population;
+    climateSpan.textContent = planet?.climate;
+    terrainSpan.textContent = planet?.terrain;
+    surfaceWaterSpan.textContent = planet?.surfaceWater;
+    gravitySpan.textContent = planet?.gravity;
+    diameterSpan.textContent = planet?.diameter;
+    orbitalPeriodSpan.textContent = planet?.orbitalPeriod;
+    rotationPeriodSpan.textContent = planet?.rotationPeriod;
 
     // puts all characters into a list
-    const charactersLis = planet?.characters?.map(character => `<li><a href="/character.html?id=${character.id}"></li>`);
+    const charactersLis = characters?.map(character => `<li><a href="/character.html?id=${character.id}">${character.name}</li>`);
     charactersUl.innerHTML = charactersLis.join("");
 
-    // film.title and this whole URL could have Joseph conflicts later on
-    const filmsLis = character?.films?.map(film => `<li><a href="/film.html?id=${film.id}">${film.title}</li>`);
+    const filmsLis = films?.map(film => `<li><a href="/film.html?id=${film.id}">${film.title}</li>`);
     filmsUl.innerHTML = filmsLis.join("");
 }   
