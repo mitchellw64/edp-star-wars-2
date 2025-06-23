@@ -20,6 +20,9 @@ addEventListener('DOMContentLoaded', () => {
   orbitalPeriodSpan = document.querySelector('span#orbitalPeriod');
   rotationPeriodSpan = document.querySelector('span#rotationPeriod');
 
+  charTitle = document.querySelector('h2#char');
+  fiTitle = document.querySelector('h2#fi');
+
   // going to add characters/films to <ul> list
   charactersUl = document.querySelector('ul#characterList');
   filmsUl = document.querySelector('#films>ul');
@@ -103,6 +106,9 @@ const renderPlanet = (planet, characters, films) => {
     diameterSpan.textContent = planet?.diameter;
     orbitalPeriodSpan.textContent = planet?.orbital_period;
     rotationPeriodSpan.textContent = planet?.rotation_period;
+
+    charTitle.textContent = "Characters on " + planet?.name;
+    fiTitle.textContent = "Films featuring " + planet?.name;
 
     // puts all characters into a list
     const charactersLis = characters?.map(character => `<li><a href="/character.html?id=${character.id}">${character.name}</li>`);
