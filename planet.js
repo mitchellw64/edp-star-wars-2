@@ -34,10 +34,11 @@ addEventListener('DOMContentLoaded', () => {
 
 // collects data from all 3 apis (planet, characters on planet, films on planet)
 async function getPlanet(id) {
+    let planet;
     try {
         planet = await fetchPlanet(id);
-        characters = await fetchCharacters(id);
-        films = await fetchFilms(id);
+        planet.characters = await fetchCharacters(id);
+        planet.films = await fetchFilms(id);
     } catch (ex) {
         console.error(`Error reading planet ${id} data`, ex.message);
     }
