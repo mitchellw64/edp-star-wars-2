@@ -1,5 +1,6 @@
 import express from 'express';
 import { promises as fs } from 'fs';
+import cors from 'cors';
 import { MongoClient, ObjectId } from 'mongodb';
 
 
@@ -12,6 +13,7 @@ const films_charactersCollection = 'films_characters';
 const films_planetsCollection = 'films_planets';
 
 const app = express();
+app.use(cors());
 const PORT = 3000;
 
 // when data comes into server, does JSON.parse, when going out does JSON.stringify
