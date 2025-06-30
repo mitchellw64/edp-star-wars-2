@@ -11,7 +11,6 @@ const App = () => {
             if (!response.ok) {
                 throw new Error('Data could not be fetched!');
             }
-            
             const json_response = await response.json();
             console.log(json_response);
             setCharacterData(json_response); // assign JSON response to the data variable.
