@@ -127,8 +127,11 @@ app.get('/api/characters/:id/films', async (req, res) => {
         const client = await MongoClient.connect(url);
         const db = client.db(dbName);
         const collection = db.collection(films_charactersCollection); 
-        const films_characters = await collection.find({character_id:Number(id)}).toArray();
-        res.json(films_characters);
+        const films_characters = (await collection.find({character_id:Number(id)}).toArray()).map(film=>film.film_id);
+        console.log (films_characters);
+        const xyz = db.collection(filmsCollection);
+        const films = await xyz.find({id:{$in:films_characters}}).toArray();
+        res.json(films);
     } catch (err) {
         console.error("Error:", err);
         res.status(500).send("Hmmm, something smells... No film characters for you! ☹");
