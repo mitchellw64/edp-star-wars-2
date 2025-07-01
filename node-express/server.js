@@ -101,8 +101,11 @@ app.get('/api/films/:id/characters', async (req, res) => {
         const client = await MongoClient.connect(url);
         const db = client.db(dbName);
         const collection = db.collection(films_charactersCollection); 
-        const films_characters = await collection.find({film_id:Number(id)}).toArray();
-        res.json(films_characters);
+        const films_characters = (await collection.find({film_id:Number(id)}).toArray()).map(character=>character.character_id);
+        console.log(films_characters);
+        const xyz = db.collection(charactersCollection);
+        const characters = await xyz.find({id:{$in:films_characters}}).toArray();
+        res.json(characters);
     } catch (err) {
         console.error("Error:", err);
         res.status(500).send("Hmmm, something smells... No film characters for you! ☹");
@@ -114,8 +117,11 @@ app.get('/api/films/:id/planets', async (req, res) => {
         const client = await MongoClient.connect(url);
         const db = client.db(dbName);
         const collection = db.collection(films_planetsCollection); 
-        const films_planets = await collection.find({film_id:Number(id)}).toArray();
-        res.json(films_planets);
+        const films_planets = (await collection.find({film_id:Number(id)}).toArray()).map(planet=>planet.planet_id);
+        console.log(films_planets);
+        const xyz = db.collection(planetsCollection);
+        const planets = await xyz.find({id:{$in:films_planets}}).toArray();
+        res.json(planets);
     } catch (err) {
         console.error("Error:", err);
         res.status(500).send("Hmmm, something smells... No film planets for you! ☹");
@@ -143,13 +149,19 @@ app.get('/api/planets/:id/films', async (req, res) => {
         const client = await MongoClient.connect(url);
         const db = client.db(dbName);
         const collection = db.collection(films_planetsCollection); 
-        const films_planets = await collection.find({planet_id:Number(id)}).toArray();
-        res.json(films_planets);
+        const films_planets = (await collection.find({planet_id:Number(id)}).toArray()).map(film=>film.film_id);
+        console.log(films_planets);
+        const xyz = db.collection(filmsCollection);
+        const films = await xyz.find({id:{$in:films_planets}}).toArray();
+        res.json(films);
     } catch (err) {
         console.error("Error:", err);
         res.status(500).send("Hmmm, something smells... No film planets for you! ☹");
     }
 });
+
+
+
 app.get('/api/planets/:id/characters', async (req, res) => {
     try {
         const { id } = req.params;
